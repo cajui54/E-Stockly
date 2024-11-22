@@ -34,11 +34,11 @@ export const productTableColumns: ColumnDef<Product>[] = [
 
       return (
         <Badge
-          className={
+          className={`hover:bg-neutral-600 ${
             lable === 'Em estoque'
               ? 'bg-green-200 text-green-900'
               : 'bg-gray-300 text-gray-950'
-          }
+          }`}
         >
           <CircleIcon size={10} className="mr-2 gap-1" />
           {lable}
