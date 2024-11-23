@@ -1,5 +1,4 @@
 import React from 'react';
-import { db } from '../_lib/prisma';
 import { Button } from '../_components/ui/button';
 import { PlusIcon } from 'lucide-react';
 import { DataTable } from '../_components/ui/data-table';
@@ -7,8 +6,8 @@ import { productTableColumns } from './_components/table-columns';
 import { getProducts } from '../_data-access/product/get-products';
 
 const ProductsPage = async () => {
-  const products = await getProducts();
-
+  const prodFetch = await fetch('http://localhost:3000/api/products');
+  const products = await prodFetch.json();
   return (
     <div className="w-full space-y-8 bg-white p-8">
       <div className="flex w-full items-center justify-between">
@@ -22,7 +21,10 @@ const ProductsPage = async () => {
           Novo produto
         </Button>
       </div>
-      <DataTable columns={productTableColumns} data={products} />
+      <DataTable
+        columns={productTableColumns}
+        data={JSON.parse(JSON.stringify(products))}
+      />
     </div>
   );
 };
