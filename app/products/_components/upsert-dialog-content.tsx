@@ -17,36 +17,40 @@ import {
 } from '@/app/_components/ui/form';
 import { Input } from '@/app/_components/ui/input';
 import {
-  createProductSchema,
-  CreateProductSchema,
-} from '@/app/actions/products/create-products/schema';
+  upsertProductSchema,
+  UpsertProductSchema,
+} from '@/app/actions/products/upsert-product/schema';
 import { Loader2Icon } from 'lucide-react';
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { NumericFormat } from 'react-number-format';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createProduct } from '@/app/actions/products/create-products';
+import { upsertProduct } from '@/app/actions/products/upsert-product';
+import { DialogTitle } from '@radix-ui/react-dialog';
 
 interface UpsertProductDialogContentProps {
+  defaultValues?: UpsertProductSchema;
   onSuccess?: () => void;
 }
 
 const UpsertProductDialogContent = ({
+  defaultValues,
   onSuccess,
 }: UpsertProductDialogContentProps) => {
-  const form = useForm<CreateProductSchema>({
+  const form = useForm<UpsertProductSchema>({
     shouldUnregister: true,
-    resolver: zodResolver(createProductSchema),
-    defaultValues: {
+    resolver: zodResolver(upsertProductSchema),
+    defaultValues: defaultValues ?? {
       name: '',
       price: 0,
       stock: 1,
     },
   });
+  const isEditing = !!defaultValues;
 
-  const onSubmit = async (data: CreateProductSchema) => {
+  const onSubmit = async (data: UpsertProductSchema) => {
     try {
-      await createProduct(data);
+      await upsertProduct({ ...data, id: defaultValues?.id });
       onSuccess?.();
     } catch (error) {
       console.error(error);
@@ -58,8 +62,14 @@ const UpsertProductDialogContent = ({
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <DialogHeader>
-            <DialogHeader>Criar produtos</DialogHeader>
-            <DialogDescription>Insira as informações abaixo:</DialogDescription>
+            <DialogHeader>
+              <DialogTitle>
+                {isEditing ? 'Editar' : 'Criar'} produto
+              </DialogTitle>
+              <DialogDescription>
+                Insira as informações abaixo:
+              </DialogDescription>
+            </DialogHeader>
           </DialogHeader>
 
           <FormField

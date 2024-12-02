@@ -17,7 +17,7 @@ interface DeleteProductDialoagContentProps {
 const DeleteProductDialogContent = ({
   productId,
 }: DeleteProductDialoagContentProps) => {
-  const handleContinueClik = async () => {
+  const handleContinueClick = async () => {
     try {
       await deleteProduct({ id: productId });
       toast.success('Produto excluído com sucesso.');
@@ -37,7 +37,7 @@ const DeleteProductDialogContent = ({
       </AlertDialogHeader>
       <AlertDialogFooter>
         <AlertDialogCancel>Cancelar</AlertDialogCancel>
-        <AlertDialogAction onClick={handleContinueClik}>
+        <AlertDialogAction onClick={handleContinueClick}>
           Continuar
         </AlertDialogAction>
       </AlertDialogFooter>
