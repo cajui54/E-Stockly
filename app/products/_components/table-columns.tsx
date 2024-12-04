@@ -28,6 +28,7 @@ import DeleteProductDialogContent from './delete-dialog-content';
 import UpsertProductDialogContent from './upsert-dialog-content';
 import { useState } from 'react';
 import ProductTableDropdownMenu from './table-dropdown-menu';
+import { formatCurrency } from '@/app/_helpers/currency';
 
 const getStatusLabel = (status: string) => {
   if (status === 'IN_STOCK') {
@@ -46,10 +47,7 @@ export const productTableColumns: ColumnDef<Product>[] = [
     header: 'Valor Unitário',
     cell: (row) => {
       const product = row.row.original;
-      return Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-      }).format(Number(product.price));
+      return formatCurrency(Number(product.price));
     },
   },
   {
