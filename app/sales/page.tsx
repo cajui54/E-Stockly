@@ -1,9 +1,7 @@
 import React from 'react';
-import { Button } from '../_components/ui/button';
-import { Sheet, SheetTrigger } from '@/app/_components/ui/sheet';
-import UpsertSheetContent from './_components/upsert-sheet-content';
 import { getProducts } from '../_data-access/product/get-products';
 import { ComboboxOption } from '../_components/ui/combobox';
+import CreateSalesButton from './_components/create-sales-button';
 
 const SalesPage = async () => {
   const products = await getProducts();
@@ -20,16 +18,10 @@ const SalesPage = async () => {
           <span className="text-xs font-semibold text-slate-500">Produtos</span>
           <h2 className="text-2xl font-semibold">Gestão de Venda</h2>
         </div>
-
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button className="bg-green-600">Nova Venda</Button>
-          </SheetTrigger>
-          <UpsertSheetContent
-            products={products}
-            productOptions={productOptions}
-          />
-        </Sheet>
+        <CreateSalesButton
+          products={products}
+          productOptions={productOptions}
+        />
       </div>
       {/*<DataTable
     columns={productTableColumns}
