@@ -5,19 +5,9 @@ import { revalidatePath } from 'next/cache';
 import { actionClient } from '@/app/_lib/safe-action';
 import { returnValidationErrors } from 'next-safe-action';
 
-export const deleteProductAction = actionClient
+export const deleteProduct = actionClient
   .schema(deleteProductSchema)
   .action(async ({ parsedInput: { id } }) => {
     await db.product.delete({ where: { id } });
     revalidatePath('/products');
   });
-
-export const deleteProduct = async ({ id }: DeleteProductSchema) => {
-  deleteProductSchema.parse({ id });
-  await db.product.delete({
-    where: {
-      id,
-    },
-  });
-  revalidatePath('/products');
-};
