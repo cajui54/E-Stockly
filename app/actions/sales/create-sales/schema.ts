@@ -1,5 +1,9 @@
 import { z } from 'zod';
-
+export class productIsOutOfStockError extends Error {
+  constructor() {
+    super('Produto fora de estoque.');
+  }
+}
 export const createSaleSchema = z.object({
   products: z.array(
     z.object({

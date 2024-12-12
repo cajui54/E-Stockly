@@ -37,11 +37,14 @@ import { formatCurrency } from '@/app/_helpers/currency';
 import SalesTableDropdownMenu from './table-dropdown-menu';
 import { createSale } from '@/app/actions/sales/create-sales';
 import { toast } from 'sonner';
-
+import { useAction } from 'next-safe-action/hooks';
+import { log } from 'node:console';
+import { flattenValidationErrors } from 'next-safe-action';
 const formShema = z.object({
   productId: z.string().uuid({ message: 'Produto é obrigatório!' }),
   quantity: z.coerce.number().int().positive(),
 });
+
 type FormSchema = z.infer<typeof formShema>;
 
 interface UpesertSheetContentProps {
@@ -60,9 +63,21 @@ const UpsertSheetContent = ({
   productOptions,
   setSheetIsOpen,
 }: UpesertSheetContentProps) => {
+  const { execute: executeCreateSale } = useAction(createSale, {
+    onError: ({ error: { validationErrors, serverError } }) => {
+      const flatternedErrors = flattenValidationErrors(validationErrors);
+
+      toast.error(serverError ?? flatternedErrors.formErrors[0]);
+    },
+    onSuccess: () => {
+      toast.success('Venda realizada com sucesso.');
+      setSheetIsOpen(false);
+    },
+  });
   const [selectedProducts, setSelectedProduct] = useState<SelectedProduct[]>(
     [],
   );
+
   const onDelete = (productId: string) => {
     setSelectedProduct((currentProduct) => {
       return currentProduct.filter((product) => product.id !== productId);
@@ -131,18 +146,12 @@ const UpsertSheetContent = ({
     });
   };
   const onSubmitSales = async () => {
-    try {
-      await createSale({
-        products: selectedProducts.map((product) => ({
-          id: product.id,
-          quantity: product.quantity,
-        })),
-      });
-      toast.success('Venda realizada com sucesso.');
-      setSheetIsOpen(false);
-    } catch (error) {
-      toast.error('Error ao realizar à venda.');
-    }
+    executeCreateSale({
+      products: selectedProducts.map((product) => ({
+        id: product.id,
+        quantity: product.quantity,
+      })),
+    });
   };
   return (
     <SheetContent className="!max-w-[35rem]">
