@@ -63,6 +63,13 @@ const UpsertSheetContent = ({
   productOptions,
   setSheetIsOpen,
 }: UpesertSheetContentProps) => {
+  const form = useForm<FormSchema>({
+    resolver: zodResolver(formShema),
+    defaultValues: {
+      productId: '',
+      quantity: 1,
+    },
+  });
   const { execute: executeCreateSale } = useAction(createSale, {
     onError: ({ error: { validationErrors, serverError } }) => {
       const flatternedErrors = flattenValidationErrors(validationErrors);
@@ -72,6 +79,8 @@ const UpsertSheetContent = ({
     onSuccess: () => {
       toast.success('Venda realizada com sucesso.');
       setSheetIsOpen(false);
+      setSelectedProduct([]);
+      form.reset();
     },
   });
   const [selectedProducts, setSelectedProduct] = useState<SelectedProduct[]>(
@@ -83,13 +92,7 @@ const UpsertSheetContent = ({
       return currentProduct.filter((product) => product.id !== productId);
     });
   };
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(formShema),
-    defaultValues: {
-      productId: '',
-      quantity: 1,
-    },
-  });
+
   const productsTotal = useMemo(() => {
     return selectedProducts.reduce((acc, product) => {
       return acc + product.price * product.quantity;
