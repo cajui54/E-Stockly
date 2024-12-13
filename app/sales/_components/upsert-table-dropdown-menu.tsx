@@ -15,7 +15,7 @@ interface SalesTableDropdownMenuProps {
   product: Pick<Product, 'id'>;
   onDelete: (productId: string) => void;
 }
-export default function SalesTableDropdownMenu({
+export default function UpsertSalesTableDropdownMenu({
   product,
   onDelete,
 }: SalesTableDropdownMenuProps) {

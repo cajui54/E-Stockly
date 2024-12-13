@@ -22,7 +22,7 @@ import { Input } from '@/app/_components/ui/input';
 import { Combobox, ComboboxOption } from '@/app/_components/ui/combobox';
 import { Product } from '@prisma/client';
 import { Button } from '@/app/_components/ui/button';
-import { CheckIcon, MoreHorizontalIcon, PlusIcon } from 'lucide-react';
+import { CheckIcon, PlusIcon } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -34,11 +34,11 @@ import {
   TableRow,
 } from '@/app/_components/ui/table';
 import { formatCurrency } from '@/app/_helpers/currency';
-import SalesTableDropdownMenu from './table-dropdown-menu';
+import UpsertSalesTableDropdownMenu from './upsert-table-dropdown-menu';
 import { createSale } from '@/app/actions/sales/create-sales';
 import { toast } from 'sonner';
 import { useAction } from 'next-safe-action/hooks';
-import { log } from 'node:console';
+
 import { flattenValidationErrors } from 'next-safe-action';
 const formShema = z.object({
   productId: z.string().uuid({ message: 'Produto é obrigatório!' }),
@@ -232,7 +232,10 @@ const UpsertSheetContent = ({
                 {formatCurrency(product.price * product.quantity)}
               </TableCell>
               <TableCell>
-                <SalesTableDropdownMenu product={product} onDelete={onDelete} />
+                <UpsertSalesTableDropdownMenu
+                  product={product}
+                  onDelete={onDelete}
+                />
               </TableCell>
             </TableRow>
           ))}
