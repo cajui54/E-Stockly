@@ -1,34 +1,10 @@
 'use client';
 import { Badge } from '@/app/_components/ui/badge';
-import { Product } from '@prisma/client';
 import { ColumnDef } from '@tanstack/react-table';
-import {
-  CircleIcon,
-  ClipboardCopyIcon,
-  EditIcon,
-  MoreHorizontalIcon,
-  TrashIcon,
-} from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/app/_components/ui/dropdown-menu';
-import {
-  AlertDialog,
-  AlertDialogTrigger,
-} from '@/app/_components/ui/alert-dialog';
-
-import { Button } from '@/app/_components/ui/button';
-import { Dialog, DialogTrigger } from '@/app/_components/ui/dialog';
-import DeleteProductDialogContent from './delete-dialog-content';
-import UpsertProductDialogContent from './upsert-dialog-content';
-import { useState } from 'react';
+import { CircleIcon } from 'lucide-react';
 import ProductTableDropdownMenu from './table-dropdown-menu';
 import { formatCurrency } from '@/app/_helpers/currency';
+import { ProductDTO } from '@/app/_data-access/product/get-products';
 
 const getStatusLabel = (status: string) => {
   if (status === 'IN_STOCK') {
@@ -37,7 +13,7 @@ const getStatusLabel = (status: string) => {
   return 'Esgotado';
 };
 
-export const productTableColumns: ColumnDef<Product>[] = [
+export const productTableColumns: ColumnDef<ProductDTO>[] = [
   {
     accessorKey: 'name',
     header: 'Produto',
