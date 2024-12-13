@@ -10,7 +10,7 @@ import {
   AlertDialogTrigger,
 } from '@/app/_components/ui/alert-dialog';
 import { Button } from '@/app/_components/ui/button';
-import { DialogTrigger } from '@/app/_components/ui/dialog';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,8 +20,6 @@ import {
   DropdownMenuTrigger,
 } from '@/app/_components/ui/dropdown-menu';
 import { deleteSale } from '@/app/actions/sales/delete-sales';
-import DeleteProductDialogContent from '@/app/products/_components/delete-dialog-content';
-import UpsertProductDialogContent from '@/app/products/_components/upsert-dialog-content';
 import { Sale } from '@prisma/client';
 import {
   ClipboardCopyIcon,
