@@ -5,10 +5,33 @@ import { revalidatePath } from 'next/cache';
 import { actionClient } from '@/app/_lib/safe-action';
 import { returnValidationErrors } from 'next-safe-action';
 
-export const createSale = actionClient
+export const upsetSale = actionClient
   .schema(createSaleSchema)
-  .action(async ({ parsedInput: { products } }) => {
+  .action(async ({ parsedInput: { products, id } }) => {
     await db.$transaction(async (trx) => {
+      const isUpdate = Boolean(id);
+      if (isUpdate) {
+        const existingSale = await trx.sale.findUnique({
+          where: { id },
+          include: { saleProducts: true },
+        });
+        await trx.sale.delete({
+          where: { id },
+        });
+
+        if (!existingSale) return;
+
+        for (const product of existingSale?.saleProducts) {
+          await trx.product.update({
+            where: { id: product.productId },
+            data: {
+              stock: {
+                increment: product.quantity,
+              },
+            },
+          });
+        }
+      }
       const sale = await trx.sale.create({
         data: {
           date: new Date(),
@@ -16,7 +39,7 @@ export const createSale = actionClient
       });
 
       for (const product of products) {
-        const productFromDb = await db.product.findUnique({
+        const productFromDb = await trx.product.findUnique({
           where: {
             id: product.id,
           },
@@ -56,4 +79,5 @@ export const createSale = actionClient
       }
     });
     revalidatePath('/products');
+    revalidatePath('/sales');
   });

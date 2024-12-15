@@ -14,7 +14,11 @@ const SalesPage = async () => {
     label: product.name,
     value: product.id,
   }));
-
+  const tableData = sales.map((sale) => ({
+    ...sale,
+    products,
+    productOptions,
+  }));
   return (
     <div className="w-full space-y-8 bg-white p-8">
       <div className="flex w-full items-center justify-between">
@@ -27,10 +31,7 @@ const SalesPage = async () => {
           productOptions={productOptions}
         />
       </div>
-      <DataTable
-        columns={saleTableColumns}
-        data={JSON.parse(JSON.stringify(sales))}
-      />
+      <DataTable columns={saleTableColumns} data={tableData} />
     </div>
   );
 };
