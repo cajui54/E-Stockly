@@ -5,6 +5,12 @@ import CreateSalesButton from './_components/create-sales-button';
 import { saleTableColumns } from './_components/table-columns';
 import { getSales } from '../_data-access/sales/get-sales';
 import { DataTable } from '../_components/ui/data-table';
+import Header, {
+  HeaderLeft,
+  HeaderRight,
+  HeaderSubtitle,
+  HeaderTitle,
+} from '../_components/header';
 
 const SalesPage = async () => {
   const sales = await getSales();
@@ -21,16 +27,19 @@ const SalesPage = async () => {
   }));
   return (
     <div className="w-full space-y-8 bg-white p-8">
-      <div className="flex w-full items-center justify-between">
-        <div className="space-y-1">
-          <span className="text-xs font-semibold text-slate-500">Produtos</span>
-          <h2 className="text-2xl font-semibold">Gestão de Venda</h2>
-        </div>
-        <CreateSalesButton
-          products={products}
-          productOptions={productOptions}
-        />
-      </div>
+      <Header>
+        <HeaderLeft>
+          <HeaderSubtitle>Produtos</HeaderSubtitle>
+          <HeaderTitle>Gestão de Venda</HeaderTitle>
+        </HeaderLeft>
+        <HeaderRight>
+          <CreateSalesButton
+            products={products}
+            productOptions={productOptions}
+          />
+        </HeaderRight>
+      </Header>
+
       <DataTable columns={saleTableColumns} data={tableData} />
     </div>
   );

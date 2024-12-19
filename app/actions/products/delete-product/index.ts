@@ -10,4 +10,6 @@ export const deleteProduct = actionClient
   .action(async ({ parsedInput: { id } }) => {
     await db.product.delete({ where: { id } });
     revalidatePath('/products');
+
+    revalidatePath('/');
   });
