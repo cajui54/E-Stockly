@@ -17,12 +17,19 @@ import {
 } from './_components/summary-card';
 import { getDashboard } from '../_data-access/dashboard/get-dashboard';
 import { formatCurrency } from '../_helpers/currency';
+import RevenueChart from './_components/revenue-chart';
 
 export default async function Home() {
-  const { totalRevenue, todayRevenue, totalSales, totalStock, totalProducts } =
-    await getDashboard();
+  const {
+    totalRevenue,
+    todayRevenue,
+    totalSales,
+    totalStock,
+    totalProducts,
+    totalLast14DaysRevenue,
+  } = await getDashboard();
   return (
-    <div className="space-y8 m-8 w-full rounded-lg">
+    <div className="m-8 w-full space-y-8 rounded-lg">
       <Header>
         <HeaderLeft>
           <HeaderTitle>Dashboard</HeaderTitle>
@@ -75,6 +82,12 @@ export default async function Home() {
           <SummuryCardTitle>Productos</SummuryCardTitle>
           <SummuryCardSubtitle>{totalProducts}</SummuryCardSubtitle>
         </SummaryCard>
+      </div>
+
+      <div className="mt-4 flex h-full flex-col overflow-hidden rounded-xl bg-white p-6">
+        <p className="text-lg font-semibold text-slate-900">Receita</p>
+        <p className="text-sm text-slate-400">Últimos 14 dias</p>
+        <RevenueChart data={totalLast14DaysRevenue} />
       </div>
     </div>
   );
