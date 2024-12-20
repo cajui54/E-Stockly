@@ -78,7 +78,6 @@ export const upsetSale = actionClient
         });
       }
     });
-    revalidatePath('/products');
-    revalidatePath('/sales');
-    revalidatePath('/');
+
+    revalidatePath('/', 'layout');
   });

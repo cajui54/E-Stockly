@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import CreateProductButton from '../products/_components/create-product-button';
 import { cn } from '../_lib/utils';
 
 export const HeaderTitle = ({ children }: { children: ReactNode }) => {
