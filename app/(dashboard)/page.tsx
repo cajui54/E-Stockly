@@ -1,6 +1,5 @@
 import {
   CircleDollarSign,
-  DollarSign,
   PackageIcon,
   ShoppingBasketIcon,
 } from 'lucide-react';
@@ -11,23 +10,20 @@ import Header, {
 } from '../_components/header';
 import {
   SummaryCard,
+  SummaryCardSkeleton,
   SummuryCardIcon,
   SummuryCardSubtitle,
   SummuryCardTitle,
 } from './_components/summary-card';
 import { getDashboard } from '../_data-access/dashboard/get-dashboard';
-import { formatCurrency } from '../_helpers/currency';
 import RevenueChart from './_components/revenue-chart';
 import MostSoldProduct from './_components/most-sold-product-item';
 import TotalRevenueCard from './_components/total-revenue-card';
 import { Suspense } from 'react';
-import { Skeleton } from '../_components/ui/skeleton';
-import SkeletonDemo from '../_components/skeleton';
 import TodayRevenueCard from './_components/today-revenue-card';
 
 export default async function Home() {
   const {
-    todayRevenue,
     totalSales,
     totalStock,
     totalProducts,
@@ -44,11 +40,11 @@ export default async function Home() {
       </Header>
 
       <div className="mb-2 grid grid-cols-2 gap-6">
-        <Suspense fallback={<SkeletonDemo />}>
+        <Suspense fallback={<SummaryCardSkeleton />}>
           <TotalRevenueCard />
         </Suspense>
 
-        <Suspense fallback={<SkeletonDemo />}>
+        <Suspense fallback={<SummaryCardSkeleton />}>
           <TodayRevenueCard />
         </Suspense>
       </div>
