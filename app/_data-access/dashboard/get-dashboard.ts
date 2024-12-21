@@ -1,7 +1,7 @@
 'only server';
 import { db } from '@/app/_lib/prisma';
 import dayjs from 'dayjs';
-import { ProductStatus } from '../product/get-products';
+import { ProductStatusDto } from '../product/get-products';
 
 export interface DayTotalRevenue {
   day: string;
@@ -11,12 +11,10 @@ export interface MostSoldProductDto {
   productId: string;
   name: string;
   totalSold: number;
-  status: ProductStatus;
+  status: ProductStatusDto;
   price: number;
 }
 interface DashboardDto {
-  totalRevenue: number;
-  todayRevenue: number;
   totalSales: number;
   totalStock: number;
   totalProducts: number;
@@ -52,29 +50,6 @@ export const getDashboard = async (): Promise<DashboardDto> => {
     });
   }
 
-  const totalRevenueQuery = `
-    SELECT SUM("SaleProduct"."unitPrice" * "SaleProduct"."quantity") as "totalRevenue"
-    FROM "SaleProduct"
-    JOIN "Sale" ON "SaleProduct"."saleId" = "Sale"."id";
-    `;
-  const todayRevenueQuery = `
-    SELECT SUM("SaleProduct"."unitPrice" * "SaleProduct"."quantity") as "todayRevenue"
-    FROM "SaleProduct"
-    JOIN "Sale" ON "SaleProduct"."saleId" = "Sale"."id"
-    WHERE "Sale"."date" > $1 AND "Sale"."date" < $2;
-    `;
-  const startOfDay = new Date(new Date().setHours(0, 0, 0, 0));
-  const endOfDay = new Date(new Date().setHours(23, 59, 59, 999));
-
-  const totalRevenuePromise =
-    db.$queryRawUnsafe<{ totalRevenue: number }[]>(totalRevenueQuery);
-
-  const todayRevenuePromise = db.$queryRawUnsafe<{ todayRevenue: number }[]>(
-    todayRevenueQuery,
-    startOfDay,
-    endOfDay,
-  );
-
   const totalSalesPromise = db.sale.count();
   const totalStockPromise = db.product.aggregate({
     _sum: {
@@ -102,25 +77,15 @@ export const getDashboard = async (): Promise<DashboardDto> => {
     }[]
   >(mostSoldProductsQuery);
 
-  const [
-    totalRevenue,
-    todayRevenue,
-    totalSales,
-    totalStock,
-    totalProducts,
-    mostSoldProducts,
-  ] = await Promise.all([
-    totalRevenuePromise,
-    todayRevenuePromise,
-    totalSalesPromise,
-    totalStockPromise,
-    totalProductsPromise,
-    mostSoldProductsPromise,
-  ]);
+  const [totalSales, totalStock, totalProducts, mostSoldProducts] =
+    await Promise.all([
+      totalSalesPromise,
+      totalStockPromise,
+      totalProductsPromise,
+      mostSoldProductsPromise,
+    ]);
 
   return {
-    totalRevenue: totalRevenue[0].totalRevenue,
-    todayRevenue: todayRevenue[0].todayRevenue,
     totalSales,
     totalStock: Number(totalStock._sum.stock),
     totalProducts,
