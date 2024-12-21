@@ -1,20 +1,9 @@
-import {
-  CircleDollarSign,
-  PackageIcon,
-  ShoppingBasketIcon,
-} from 'lucide-react';
 import Header, {
   HeaderLeft,
   HeaderSubtitle,
   HeaderTitle,
 } from '../_components/header';
-import {
-  SummaryCard,
-  SummaryCardSkeleton,
-  SummuryCardIcon,
-  SummuryCardSubtitle,
-  SummuryCardTitle,
-} from './_components/summary-card';
+import { SummaryCardSkeleton } from './_components/summary-card';
 import { getDashboard } from '../_data-access/dashboard/get-dashboard';
 import RevenueChart from './_components/revenue-chart';
 import MostSoldProduct from './_components/most-sold-product-item';
@@ -22,14 +11,11 @@ import TotalRevenueCard from './_components/total-revenue-card';
 import { Suspense } from 'react';
 import TodayRevenueCard from './_components/today-revenue-card';
 import TotalSalesCard from './_components/total-sales-card';
+import TotalStockCard from './_components/total-stock-card';
+import TotalProductsCard from './_components/total-products.card';
 
 export default async function Home() {
-  const {
-    totalStock,
-    totalProducts,
-    totalLast14DaysRevenue,
-    mostSoldProducts,
-  } = await getDashboard();
+  const { totalLast14DaysRevenue, mostSoldProducts } = await getDashboard();
   return (
     <div className="m-8 w-full space-y-8 rounded-lg">
       <Header>
@@ -53,21 +39,13 @@ export default async function Home() {
           <TotalSalesCard />
         </Suspense>
 
-        <SummaryCard>
-          <SummuryCardIcon>
-            <PackageIcon />
-          </SummuryCardIcon>
-          <SummuryCardTitle>Total em estoque</SummuryCardTitle>
-          <SummuryCardSubtitle>{totalStock}</SummuryCardSubtitle>
-        </SummaryCard>
+        <Suspense fallback={<SummaryCardSkeleton />}>
+          <TotalStockCard />
+        </Suspense>
 
-        <SummaryCard>
-          <SummuryCardIcon>
-            <ShoppingBasketIcon />
-          </SummuryCardIcon>
-          <SummuryCardTitle>Productos</SummuryCardTitle>
-          <SummuryCardSubtitle>{totalProducts}</SummuryCardSubtitle>
-        </SummaryCard>
+        <Suspense fallback={<SummaryCardSkeleton />}>
+          <TotalProductsCard />
+        </Suspense>
       </div>
 
       <div className="grid min-h-0 grid-cols-[minmax(0,2.5fr),minmax(0,1fr)] gap-6">
