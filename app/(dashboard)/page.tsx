@@ -13,9 +13,11 @@ import TodayRevenueCard from './_components/today-revenue-card';
 import TotalSalesCard from './_components/total-sales-card';
 import TotalStockCard from './_components/total-stock-card';
 import TotalProductsCard from './_components/total-products.card';
+import Last14DaysRevenueCard from './_components/last-14-days-revenue-card';
+import { Skeleton } from '../_components/ui/skeleton';
 
 export default async function Home() {
-  const { totalLast14DaysRevenue, mostSoldProducts } = await getDashboard();
+  const { mostSoldProducts } = await getDashboard();
   return (
     <div className="m-8 w-full space-y-8 rounded-lg">
       <Header>
@@ -49,11 +51,18 @@ export default async function Home() {
       </div>
 
       <div className="grid min-h-0 grid-cols-[minmax(0,2.5fr),minmax(0,1fr)] gap-6">
-        <div className="mt-4 flex h-full flex-col overflow-hidden rounded-xl bg-white p-6">
-          <p className="text-lg font-semibold text-slate-900">Receita</p>
-          <p className="text-sm text-slate-400">Últimos 14 dias</p>
-          <RevenueChart data={totalLast14DaysRevenue} />
-        </div>
+        <Suspense
+          fallback={
+            <Skeleton className="bg-white p-6">
+              <div className="space-y-2">
+                <Skeleton className="h-7 w-[180px] rounded-xl" />
+                <Skeleton className="h-5 w-[180px] rounded-xl" />
+              </div>
+            </Skeleton>
+          }
+        >
+          <Last14DaysRevenueCard />
+        </Suspense>
         <div className="mt-4 flex h-full flex-col overflow-hidden rounded-xl bg-white">
           <p className="p-6 text-lg font-semibold text-slate-900">
             Produtos mais vendidos
