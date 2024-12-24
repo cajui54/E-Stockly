@@ -2,7 +2,9 @@ import React, { ReactNode } from 'react';
 import { cn } from '../_lib/utils';
 
 export const HeaderTitle = ({ children }: { children: ReactNode }) => {
-  return <h2 className="text-2xl font-semibold">{children}</h2>;
+  return (
+    <h2 className="text-2xl font-semibold text-emerald-500">{children}</h2>
+  );
 };
 export const HeaderSubtitle = ({ children }: { children: ReactNode }) => {
   return (
