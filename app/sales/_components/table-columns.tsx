@@ -34,8 +34,6 @@ export const saleTableColumns: ColumnDef<SaleTableColumn>[] = [
         original: { date },
       },
     }) => {
-      console.log(date);
-
       return new Date(date).toLocaleDateString('pt-BR');
     },
   },

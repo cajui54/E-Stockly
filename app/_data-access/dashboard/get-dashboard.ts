@@ -1,6 +1,6 @@
 'only server';
 import { db } from '@/app/_lib/prisma';
-import { ProductStatusDto } from '../product/get-products';
+import { DashboardDto } from '@/app/(dashboard)/_components/most-sold-product-item';
 
 export const getDashboard = async (): Promise<DashboardDto> => {
   const mostSoldProductsQuery = `
