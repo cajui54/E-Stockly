@@ -26,7 +26,7 @@ const SalesPage = async () => {
     productOptions,
   }));
   return (
-    <div className="w-full space-y-8 bg-white p-8">
+    <div className="w-full space-y-8 overflow-auto rounded-lg bg-white p-8">
       <Header>
         <HeaderLeft>
           <HeaderSubtitle>Produtos</HeaderSubtitle>

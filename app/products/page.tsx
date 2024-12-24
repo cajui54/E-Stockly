@@ -13,7 +13,7 @@ import Header, {
 const ProductsPage = async () => {
   const products = await cachedGetProducts();
   return (
-    <div className="w-full space-y-8 bg-white p-8">
+    <div className="w-full space-y-8 overflow-auto rounded-lg bg-white p-8">
       <Header>
         <HeaderLeft>
           <HeaderSubtitle>Gestão de Produtos</HeaderSubtitle>

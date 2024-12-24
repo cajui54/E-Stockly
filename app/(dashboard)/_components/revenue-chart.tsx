@@ -27,7 +27,7 @@ const RevenueChart = ({ data }: RevenueCartProps) => {
           axisLine={false}
         />
         <ChartTooltip content={<ChartTooltipContent />} />
-        <Bar dataKey={'totalRevenue'} radius={5} />
+        <Bar className="bg-emerald-700" dataKey={'totalRevenue'} radius={5} />
       </BarChart>
     </ChartContainer>
   );
