@@ -1,7 +1,17 @@
 import ProductStatusBadge from '@/app/_components/product-status-badge';
-import { MostSoldProductDto } from '@/app/_data-access/dashboard/get-dashboard';
+import { ProductStatusDto } from '@/app/_data-access/product/get-products';
 import { formatCurrency } from '@/app/_helpers/currency';
 import React from 'react';
+export interface MostSoldProductDto {
+  productId: string;
+  name: string;
+  totalSold: number;
+  status: ProductStatusDto;
+  price: number;
+}
+export interface DashboardDto {
+  mostSoldProducts: MostSoldProductDto[];
+}
 interface MostSoldProductProps {
   product: MostSoldProductDto;
 }

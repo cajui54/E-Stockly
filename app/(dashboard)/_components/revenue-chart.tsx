@@ -5,7 +5,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/app/_components/ui/chart';
-import { DayTotalRevenue } from '@/app/_data-access/dashboard/get-dashboard';
+
 import { Bar, BarChart, XAxis } from 'recharts';
 
 const chartConfig: ChartConfig = {
@@ -14,7 +14,7 @@ const chartConfig: ChartConfig = {
   },
 };
 interface RevenueCartProps {
-  data: DayTotalRevenue[];
+  data: any[];
 }
 const RevenueChart = ({ data }: RevenueCartProps) => {
   return (
