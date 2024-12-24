@@ -20,7 +20,9 @@ const DeleteProductDialogContent = ({
 }: DeleteProductDialoagContentProps) => {
   const { execute: executeDeleteProduct } = useAction(deleteProduct, {
     onError: ({ error: { validationErrors, serverError } }) => {
-      toast.error('Ocorreu um erro ao deletar produto.');
+      toast.error(
+        `Ocorreu um erro ao deletar produto.${validationErrors}, ${serverError}`,
+      );
     },
     onSuccess: () => {
       toast.success('O produtos foi deletado com sucesso!');

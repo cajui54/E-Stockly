@@ -1,7 +1,6 @@
 'use client';
 import React, { useEffect, useMemo, useState } from 'react';
 import {
-  Sheet,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -41,7 +40,7 @@ import { useAction } from 'next-safe-action/hooks';
 
 import { flattenValidationErrors } from 'next-safe-action';
 import { ProductDTO } from '@/app/_data-access/product/get-products';
-import { Product } from '@prisma/client';
+
 const formShema = z.object({
   productId: z.string().uuid({ message: 'Produto é obrigatório!' }),
   quantity: z.coerce.number().int().positive(),

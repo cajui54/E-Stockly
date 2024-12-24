@@ -6,7 +6,7 @@ const Sidebar = () => {
   return (
     <div className="w-64 bg-white p-5">
       <div className="px-8 py-6">
-        <h1 className="texy-2xl font-bold">STOCKLY</h1>
+        <h1 className="texy-2xl font-bold">E-STOCKLY</h1>
       </div>
 
       <div className="flex flex-col gap-2 p-2">
