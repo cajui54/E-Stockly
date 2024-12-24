@@ -3,12 +3,12 @@ import { Button } from '@/app/_components/ui/button';
 import { Sheet, SheetTrigger } from '@/app/_components/ui/sheet';
 import React, { useState } from 'react';
 import UpsertSheetContent from './upsert-sheet-content';
-import { Product } from '@prisma/client';
 import { ComboboxOption } from '@/app/_components/ui/combobox';
 import { PlusIcon } from 'lucide-react';
+import { ProductDTO } from '@/app/_data-access/product/get-products';
 
 interface CreateSalesButtonProps {
-  products: Product[];
+  products: ProductDTO[];
   productOptions: ComboboxOption[];
 }
 
@@ -22,7 +22,11 @@ const CreateSalesButton = (props: CreateSalesButtonProps) => {
           Nova Venda
         </Button>
       </SheetTrigger>
-      <UpsertSheetContent setSheetIsOpen={setSheetIsOpen} {...props} />
+      <UpsertSheetContent
+        isOpen={sheetIsOpen}
+        setSheetIsOpen={setSheetIsOpen}
+        {...props}
+      />
     </Sheet>
   );
 };

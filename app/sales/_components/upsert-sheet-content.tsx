@@ -1,5 +1,5 @@
 'use client';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Sheet,
   SheetContent,
@@ -41,6 +41,7 @@ import { useAction } from 'next-safe-action/hooks';
 
 import { flattenValidationErrors } from 'next-safe-action';
 import { ProductDTO } from '@/app/_data-access/product/get-products';
+import { Product } from '@prisma/client';
 const formShema = z.object({
   productId: z.string().uuid({ message: 'Produto é obrigatório!' }),
   quantity: z.coerce.number().int().positive(),
@@ -54,6 +55,7 @@ interface SelectedProduct {
   quantity: number;
 }
 interface UpesertSheetContentProps {
+  isOpen: boolean;
   saleId?: string;
   products: ProductDTO[];
   productOptions: ComboboxOption[];
@@ -62,6 +64,7 @@ interface UpesertSheetContentProps {
 }
 
 const UpsertSheetContent = ({
+  isOpen,
   saleId,
   products,
   productOptions,
@@ -103,7 +106,15 @@ const UpsertSheetContent = ({
       return acc + product.price * product.quantity;
     }, 0);
   }, [selectedProducts]);
-
+  useEffect(() => {
+    if (!isOpen) {
+      form.reset();
+      setSelectedProduct([]);
+    }
+  }, [form, isOpen]);
+  useEffect(() => {
+    setSelectedProduct(defaultSelectedProducts ?? []);
+  }, [defaultSelectedProducts]);
   const onSubmit = (data: FormSchema) => {
     const selectedProduct = products.find(
       (product) => product.id === data.productId,
