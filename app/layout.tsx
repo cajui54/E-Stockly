@@ -9,8 +9,8 @@ const inter = Inter({
   display: 'auto',
 });
 export const metadata: Metadata = {
-  title: 'Stockly App',
-  description: 'Stockly App, é uma aplicação para gerenciar vendas e estoque',
+  title: 'E-Stockly App',
+  description: 'E-Stockly App, é uma aplicação para gerenciar vendas e estoque',
 };
 
 export default function RootLayout({
