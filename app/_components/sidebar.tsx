@@ -4,7 +4,7 @@ import { LayoutGridIcon, PackageIcon, ShoppingBasketIcon } from 'lucide-react';
 import SidebarButton from './sidebar-button';
 const Sidebar = () => {
   return (
-    <div className="h-full w-64 bg-white p-5">
+    <div className="min-h-96 w-64 bg-white p-5">
       <div className="px-8 py-6">
         <h1 className="texy-2xl font-bold">E-STOCKLY</h1>
       </div>
