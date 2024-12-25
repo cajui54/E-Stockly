@@ -13,4 +13,5 @@
 * dayjs
 * Postgresql
 
+### Deploy da aplicação abaixo:
 [Deploy E-Stockly](https://e-stockly.vercel.app/)
