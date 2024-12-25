@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { Dialog, DialogTrigger } from '../../_components/ui/dialog';
+import { Dialog, DialogTrigger } from '../../../_components/ui/dialog';
 import { PlusIcon } from 'lucide-react';
 import { Button } from '@/app/_components/ui/button';
 import UpsertProductDialogContent from './upsert-dialog-content';

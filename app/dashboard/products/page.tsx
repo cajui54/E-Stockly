@@ -1,14 +1,14 @@
 import React from 'react';
-import { DataTable } from '../_components/ui/data-table';
+import { DataTable } from '../../_components/ui/data-table';
 import { productTableColumns } from './_components/table-columns';
-import { cachedGetProducts } from '../_data-access/product/get-products';
+import { cachedGetProducts } from '../../_data-access/product/get-products';
 import CreateProductButton from './_components/create-product-button';
 import Header, {
   HeaderLeft,
   HeaderRight,
   HeaderSubtitle,
   HeaderTitle,
-} from '../_components/header';
+} from '../../_components/header';
 
 const ProductsPage = async () => {
   const products = await cachedGetProducts();

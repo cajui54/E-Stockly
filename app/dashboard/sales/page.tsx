@@ -1,16 +1,16 @@
 import React from 'react';
-import { getProducts } from '../_data-access/product/get-products';
-import { ComboboxOption } from '../_components/ui/combobox';
+import { getProducts } from '../../_data-access/product/get-products';
+import { ComboboxOption } from '../../_components/ui/combobox';
 import CreateSalesButton from './_components/create-sales-button';
 import { saleTableColumns } from './_components/table-columns';
-import { getSales } from '../_data-access/sales/get-sales';
-import { DataTable } from '../_components/ui/data-table';
+import { getSales } from '../../_data-access/sales/get-sales';
+import { DataTable } from '../../_components/ui/data-table';
 import Header, {
   HeaderLeft,
   HeaderRight,
   HeaderSubtitle,
   HeaderTitle,
-} from '../_components/header';
+} from '../../_components/header';
 
 const SalesPage = async () => {
   const sales = await getSales();
@@ -26,7 +26,7 @@ const SalesPage = async () => {
     productOptions,
   }));
   return (
-    <div className="w-full space-y-8 overflow-auto rounded-lg bg-white p-8">
+    <div className="h-full w-full space-y-8 overflow-auto rounded-lg bg-white p-8">
       <Header>
         <HeaderLeft>
           <HeaderSubtitle>Vendas</HeaderSubtitle>
