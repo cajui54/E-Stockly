@@ -12,3 +12,5 @@
 * Prisma
 * dayjs
 * Postgresql
+
+[Deploy](https://e-stockly.vercel.app/)
