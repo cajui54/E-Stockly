@@ -13,4 +13,4 @@
 * dayjs
 * Postgresql
 
-[Deploy](https://e-stockly.vercel.app/)
+[Deploy E-Stockly](https://e-stockly.vercel.app/)
